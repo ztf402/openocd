@@ -97,7 +97,11 @@ jobs:
           # set env and call cross-build.sh
           export OPENOCD_TAG=$OPENOCD_TAG
           export OPENOCD_SRC=$PWD
-          export OPENOCD_CONFIG=""
+          
+          # --- 这是我们修改的关键 ---
+          # 启用所有常见的调试器接口，这将自动包含所需的闪存驱动（如 qspi）
+          export OPENOCD_CONFIG="--enable-cmsis-dap --enable-picoprobe --enable-ftdi --enable-jlink --enable-stlink --enable-ti-icdi --enable-ulink --enable-usb-blaster --enable-kitprog"
+          
           mkdir -p $BUILD_DIR &&  cd $BUILD_DIR
           bash $OPENOCD_SRC/contrib/cross-build.sh $HOST
           # add missing dlls
